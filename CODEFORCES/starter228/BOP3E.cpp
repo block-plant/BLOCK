@@ -59,21 +59,19 @@ void solve() {
 
     int count =0 ; 
 
-    vll ans(n) ; 
-    ans[0] = 0 ; 
+    vll ans ; 
+    ans.push_back(0);
     count++ ; 
     f(i , 1 , n)
     {
-        if(a[i] <= count) 
-        {
-            ans.push_back(a[i]) ; 
-        }
+        if(a[i] <= count) ans.push_back(a[i]);
         else 
         {
             ans.push_back(count) ; 
             count++ ; 
         }
     }
+    
     out(ans) ; 
 }
 
