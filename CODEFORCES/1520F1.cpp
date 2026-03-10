@@ -5,6 +5,10 @@
 **/
 
 #include <bits/stdc++.h>
+#include <iostream>  
+#include <vector>   
+#include <string>
+#include <algorithm>
 using namespace std;
 
 // --- Type Definitions ---
@@ -47,18 +51,36 @@ void fastio() {
     cin.tie(NULL);
 }
 
-vll result;
+vll hidden = {1,0,1,1,0,1}; 
+bool testing = false;
 
-ll ask(ll left , ll right)
-{
-    cout << "? " << left << ' ' << right << endl ;
-    ll response ;
-    cin >> response ; 
-    return response ;
-}
+void solve() {
+    l(n);
+    l(t); // it is 1
+    l(k);
 
-void dnc(ll low , ll high , ll k)
-{
+    ll low = 1 ; 
+    ll high = n ;
+
+    auto ask = [&](ll left , ll right)->ll
+    {
+        auto interactor = [&](ll start , ll end)->ll {
+            ll sum = 0 ; 
+            f(i , start , end+1) sum += hidden[i];
+            return sum;
+        };
+
+        cout << "? " << left << ' ' << right << endl;
+        if(testing)
+        {
+            cout << interactor(left , right) << endl;
+            return interactor(left , right);
+        }
+        ll response ;
+        cin >> response ; 
+        return response;
+    };
+    
     ll ans = -1 ;
     while(low <= high)
     {
@@ -85,16 +107,6 @@ void dnc(ll low , ll high , ll k)
     }
 
     cout << "! " << ans << endl;
-}
-void solve() {
-    l(n);
-    l(t); // it is 1
-    l(k);
-
-    ll low = 1 ; 
-    ll high = n ;
-
-    dnc(low , high , k) ; 
 }
 
 int main() {
