@@ -1,9 +1,10 @@
-// http://codeforces.com/edu/course/2/lesson/9/3/practice/contest/307094/problem/G
+// https://codeforces.com/edu/course/2/lesson/9/3/practice/contest/307094/problem/F
+
 
 /**
  * Author: KUNWAR
  * Date:   2026-04-04
- * Time:   14:20:59
+ * Time:   14:54:59
 **/
 
 #include <bits/stdc++.h>
@@ -49,40 +50,29 @@ void fastio() {
     cin.tie(NULL);
 }
 
-template <typename T> vector<T> in(int n) { vector<T> v(n); for (T &x : v) cin >> x; return v; }
-template <typename T> void out(const vector<T> &v) { for (const T &x : v) cout << x << ' '; cout << '\n'; }
-template<typename T> vector<vector<T>> create2D(size_t rows, size_t cols, T default_value = T{}) { return vector<vector<T>>(rows, vector<T>(cols, default_value)); }
-template <typename T> vector<vector<T>> in2D(int r, int c) { auto v = create2D<T>(r, c); for (auto &row : v) for (T &cell : row) cin >> cell; return v; }
-template<typename T> void out2D(const vector<vector<T>>& vec) { for (size_t i = 0; i < vec.size(); ++i) { for (size_t j = 0; j < vec[i].size(); ++j) { cout << vec[i][j] << (j < vec[i].size() - 1 ? " " : ""); } cout << "\n"; } }
+template <typename T> map<T, int> get_freq(const vector<T>& v) { map<T, int> m; for(const auto &x : v) m[x]++; return m; }
+vector<ll> get_char_freq(const string& s) { vector<ll> freq(26, 0); for (char c : s) if (c >= 'a' && c <= 'z') freq[c - 'a']++; return freq; }
 
 void solve() {
     l(n);
-    l(c);
-    s(s);
-
+    l(m);
+    s(a);
+    s(b);
+    
+    auto f = get_char_freq(b);
+    ll ans = 0 ; 
     ll r = 0 ; 
-    ll l = 0 ; 
-    ll ans = -1 ; 
+    ll l = 0 ;  
 
-    ll a = 0 ; 
-    ll b = 0 ; 
-
-    ll cur = 0 ; 
     while(r < n)
     {
-        a += (s[r] == 'a') ; 
-        b += (s[r] == 'b') ; 
-        if(s[r] == 'b') cur += a ; 
-        
-        while(cur > c)
+        f[a[r] - 'a']-- ; 
+        while(f[a[r] - 'a'] < 0)
         {
-            a -= (s[l] == 'a') ; 
-            b -= (s[l] == 'b') ; 
-            if(s[l] == 'a') cur -= b ; 
-            l++ ;  
+            f[a[l] - 'a']++ ; 
+            l++ ; 
         }
-
-        ans = max(ans , r - l + 1);
+        ans += (r - l + 1) ;
         r++ ; 
     }
     op(ans);
@@ -91,7 +81,7 @@ void solve() {
 int main() {
     fastio();
     // l(t);
-    ll t = 1 ; 
+    ll t = 1 ;
     while(t--) {
         solve();
     }
