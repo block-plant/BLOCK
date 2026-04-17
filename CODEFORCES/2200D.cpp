@@ -90,19 +90,11 @@ void solve() {
         }
     }
 
-    f(i, 0, pos) {
-        cout << s[i] << " ";
-    }
+    f(i , 0 , pos) cout << s[i] << " ";
     
-    // Second: the entire optimized block a
-    f(i, 0, (ll)a.size()) {
-        cout << a[i] << ( (i == (ll)a.size() - 1 && pos == (ll)s.size()) ? "" : " ");
-    }
+    f(i , 0 , (ll)a.size()) cout << a[i] << ( (i == (ll)a.size() - 1 && pos == (ll)s.size()) ? "" : " ");
     
-    // Third: the remaining elements of s
-    f(i, pos, (ll)s.size()) {
-        cout << s[i] << (i == (ll)s.size() - 1 ? "" : " ");
-    }
+    f(i , pos , (ll)s.size()) cout << s[i] << (i == (ll)s.size() - 1 ? "" : " ");
     cout << endl;
 }
 
