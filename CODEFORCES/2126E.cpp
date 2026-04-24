@@ -57,7 +57,7 @@ template<typename T> vector<vector<T>> create2D(size_t rows, size_t cols, T defa
 template <typename T> vector<vector<T>> in2D(int r, int c) { auto v = create2D<T>(r, c); for (auto &row : v) for (T &cell : row) cin >> cell; return v; }
 template<typename T> void out2D(const vector<vector<T>>& vec) { for (size_t i = 0; i < vec.size(); ++i) { for (size_t j = 0; j < vec[i].size(); ++j) { cout << vec[i][j] << (j < vec[i].size() - 1 ? " " : ""); } cout << "\n"; } }
 
-void solve() {
+bool solve() {
     l(n);
     auto p = in<ll>(n);
     auto s = in<ll>(n);
