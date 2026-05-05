@@ -16,7 +16,6 @@ using vc = vector<char>;
 using vb = vector<bool>;
 using pii = pair<int, int>;
 using pll = pair<ll, ll>;
-using vpii = vector<pii>;
 using vpll = vector<pll>;
 using vvi = vector<vi>;
 using vvll = vector<vll>;
