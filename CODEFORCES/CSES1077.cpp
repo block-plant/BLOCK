@@ -1,10 +1,11 @@
 /**
  * Author: KUNWAR
- * Date:   2026-04-03
- * Time:   00:14:38
+ * Date:   2026-05-10
+ * Time:   20:57:33
 **/
 
 #include <bits/stdc++.h>
+#include <cstdlib>
 using namespace std;
 
 // --- Type Definitions ---
@@ -53,88 +54,73 @@ template<typename T> vector<vector<T>> create2D(size_t rows, size_t cols, T defa
 template <typename T> vector<vector<T>> in2D(int r, int c) { auto v = create2D<T>(r, c); for (auto &row : v) for (T &cell : row) cin >> cell; return v; }
 template<typename T> void out2D(const vector<vector<T>>& vec) { for (size_t i = 0; i < vec.size(); ++i) { for (size_t j = 0; j < vec[i].size(); ++j) { cout << vec[i][j] << (j < vec[i].size() - 1 ? " " : ""); } cout << "\n"; } }
 
-// THIS QUESTION IS IMPORTANT : THIS IS THE TWO HEAP PATTERN
-
-
-void solve() {
-    l(n);
-    l(k);
-    
-    auto a = in<ll>(n);
-
-    multiset<ll> mp;
-
-    ll l = 0 ;
-    ll r = 0 ; 
-
-    f(i , 0 , k) mp.insert(a[i]);
-
-    auto mid = mp.begin();
-    advance(mid, (k-1) / 2);
-
-    auto it = mp.begin();
-
-    for(ll i = 0 ; i < k ; i++ , it++)
-    {
-        if(i <= (k-1)/2) l += *it ; 
-        else r += *it ; 
-    }
-
-    ll m = *mid ;
-    ll lc = (k+1)/2 ; 
-    ll rc = k/2 ; 
-
-    cout << (r - (m * rc)) + ((m * lc) - l) << " " ; 
-
-    f(i , k , n)
-    {
-        ll cur = a[i];
-        ll del = a[i-k];
-
-        mp.insert(cur);
-
-        if(cur < *mid)
-        {
-            l += cur ;
-
-            l -= *mid ; 
-            r += *mid ;
-
-            mid-- ;
-        }
-        else
-        {
-            r += cur ;
-        }
-
-        if(del <= *mid)
-        {
-            l -= del ;
-            r -= *next(mid) ; 
-            l += *next(mid) ; 
-            mid++ ; 
-        }
-        else
-        {
-            r -= del ; 
-        }
-
-        auto del_it = mp.find(del);
-        if(del_it == mid) del_it++ ;
-        mp.erase(del_it);
-        
-        m = *mid ; 
-        cout << (r - (m * rc)) + ((m * lc) - l) << " " ; 
-    }
-    cout << endl;
-}
-
 int main() {
     fastio();
-    // l(t);
-    ll t = 1 ;
-    while(t--) {
-        solve();
-    }
+    l(n) ; 
+    l(k);
+    auto a = in<ll>(n);
+    multiset<ll> g, l;
+    ll sumg = 0 ; 
+    ll suml = 0 ; 
+    vll ans ;
+
+    auto bal = [&]()->void {
+        if(l.size() > g.size() + 1) {
+            ll val = *l.rbegin();
+            g.insert(val);
+            sumg += val ;
+            suml -= val ; 
+            l.erase(l.find(val));
+        }
+        if(l.size() < g.size()) {
+            ll val = *g.begin();
+            l.insert(val);
+            suml += val ; 
+            sumg -= val ; 
+            g.erase(g.find(val));
+        }
+    };
+
+    auto solve = [&]()->void {
+        f(i , 0 , n) {
+            if(l.size() && a[i] <= *l.rbegin()) {
+                l.insert(a[i]);
+                suml += a[i];
+            }
+            else {
+                g.insert(a[i]);
+                sumg += a[i];
+            }
+            bal();
+
+            if(i >= k) {
+                ll rem = a[i-k];
+                if(rem <= *l.rbegin()) {
+                    l.erase(l.find(rem));
+                    suml -= rem;
+                }
+                else {
+                    g.erase(g.find(rem));
+                    sumg -= rem;
+                }
+                bal();
+            }
+
+            if(i >= k - 1) {
+                if(k & 1) {
+                    ll med = *l.rbegin();
+                    ll prod = 1LL * (l.size() - g.size()) * med ;
+                    ans.push_back(prod - suml + sumg);
+                }
+                else {
+                    ll med = (*l.rbegin() + *g.begin()) / 2 ;
+                    ll prod = 1LL * (l.size() - g.size()) * med ;
+                    ans.push_back(prod - suml + sumg);
+                }
+            }
+        }
+        out(ans);
+    };
+    solve();
     return 0;
 }
