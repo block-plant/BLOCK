@@ -1,9 +1,7 @@
-// https://codeforces.com/edu/course/2/lesson/9/3/practice/contest/307094/problem/E
-
 /**
  * Author: KUNWAR
- * Date:   2026-04-04
- * Time:   03:42:49
+ * Date:   2026-05-10
+ * Time:   05:20:49
 **/
 
 #include <bits/stdc++.h>
@@ -55,46 +53,34 @@ template<typename T> vector<vector<T>> create2D(size_t rows, size_t cols, T defa
 template <typename T> vector<vector<T>> in2D(int r, int c) { auto v = create2D<T>(r, c); for (auto &row : v) for (T &cell : row) cin >> cell; return v; }
 template<typename T> void out2D(const vector<vector<T>>& vec) { for (size_t i = 0; i < vec.size(); ++i) { for (size_t j = 0; j < vec[i].size(); ++j) { cout << vec[i][j] << (j < vec[i].size() - 1 ? " " : ""); } cout << "\n"; } }
 
-void solve() {
-    l(n);
-    l(s);
-    auto w = in<ll>(n);
-    auto c = in<ll>(n);
-
-    ll left = 0 ; 
-    ll right = 0 ;
-
-    vll wp(n+1 , 0);
-    vll cp(n+1 , 0);
-
-    f(i , 1 , n+1)
-    {
-        wp[i] = w[i-1] + wp[i-1];
-        cp[i] = c[i-1] + cp[i-1];
-    }
-
-    ll ps = -1 ;
-
-    while(right <= n)
-    {
-        sum += a[right];
-        while(left <= right && wp[right] - wp[left] > s)
-        {
-            sum -= a[left];
-            left++ ; 
-        }
-        if((wp[right] - wp[left]) <= s && ps < (cp[right] - cp[left])) ps = cp[right] - cp[left];
-        right++ ;
-    }
-
-    cout << ps << endl;
-}
-
 int main() {
     fastio();
-    // l(t);
-    ll t = 1 ;
+    l(t);
     while(t--) {
+        auto solve = [&]()->void {
+            l(n);
+            l(k);
+            auto a = in<ll>(n);
+
+            deque<ll> ans; 
+            
+            f(i , 0 , k) {
+                if(a[i] < 0) ans.push_back(i);
+            }
+
+            if(ans.size()) cout << 1 + ans.front() << ' ';
+            else cout << -1 << ' ' ;
+
+            f(i , k , n) {
+                if(a[i] < 0) {
+                    while(ans.size() && ans.front() <= i - k) ans.pop_front();
+                    ans.push_back(i);
+                }
+                if(ans.size()) cout << 1 + ans.front() << ' ';
+                else cout << -1 << ' ' ;
+            }
+            cout << endl;
+        };
         solve();
     }
     return 0;
