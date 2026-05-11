@@ -1,0 +1,26 @@
+{
+  "C_Cpp.default.compilerPath": "/opt/homebrew/bin/g++-15",
+  "C_Cpp.default.cppStandard": "c++20",
+  "C_Cpp.default.intelliSenseMode": "macos-gcc-arm64",
+  "clangd.arguments": [
+    "--query-driver=/opt/homebrew/bin/g++-15,/opt/homebrew/bin/gcc-15,/Users/ayushkunwarsingh/bin/g++,/Users/ayushkunwarsingh/bin/gcc"
+  ],
+  "clangd.fallbackFlags": [
+    "-std=gnu++20",
+    "-isystem",
+    "/opt/homebrew/Cellar/gcc/15.2.0_1/include/c++/15",
+    "-isystem",
+    "/opt/homebrew/Cellar/gcc/15.2.0_1/include/c++/15/aarch64-apple-darwin25",
+    "-isystem",
+    "/opt/homebrew/Cellar/gcc/15.2.0_1/include/c++/15/backward",
+    "-isystem",
+    "/opt/homebrew/Cellar/gcc/15.2.0_1/lib/gcc/current/gcc/aarch64-apple-darwin25/15/include",
+    "-isystem",
+    "/opt/homebrew/Cellar/gcc/15.2.0_1/lib/gcc/current/gcc/aarch64-apple-darwin25/15/include-fixed",
+    "-isystem",
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX26.sdk/usr/include"
+  ],
+  "files.associations": {
+    "*.tcc": "cpp"
+  }
+}

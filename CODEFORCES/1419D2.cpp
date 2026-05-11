@@ -1,7 +1,7 @@
 /**
  * Author: KUNWAR
- * Date:   2026-05-11
- * Time:   12:09:35
+ * Date:   2026-05-10
+ * Time:   23:28:39
 **/
 
 #include <bits/stdc++.h>
@@ -55,38 +55,36 @@ template<typename T> void out2D(const vector<vector<T>>& vec) { for (size_t i = 
 
 void solve() {
     l(n);
-    l(aq);
-    l(bq);
+    
+    auto a = in<ll>(n);
 
-    vll a(n+1);
-    f(i , 1 , n+1) {
-        cin >> a[i];
-    }
+    sort(all(a));
+    ll p = n/2 ;
+    ll s = 0 ;
 
-    vll pref(n+1);
-    pref[0] = 0 ; 
-    f(i , 1 , n+1) {
-        pref[i] = (a[i] + pref[i-1]) ;
-    }
-
-    multiset<ll> k ; 
-
-    ll ans = -2e18;
-
-    f(i , aq , n+1) {
-        k.insert(pref[i - aq]);
-        if(i > bq) {
-            k.erase(k.find(pref[i-bq-1]));
+    vll ans ;
+    f(i , 0 , n) {
+        if(i % 2 != 0) {
+            ans.push_back(a[s]);
+            s++ ; 
         }
-        ans = max(ans, pref[i] - *k.begin());
+        else {
+            ans.push_back(a[p]);
+            p++ ; 
+        }
     }
-    cout << ans << endl;
+    ll o = 0 ;
+    f(i , 1 , n-1) {
+        if(ans[i-1] > ans[i] && ans[i] < ans[i+1]) o++ ; 
+    }
+    op(o);
+    out(ans);
 }
 
 int main() {
     fastio();
     // l(t);
-    ll t = 1; 
+    ll t = 1 ;
     while(t--) {
         solve();
     }

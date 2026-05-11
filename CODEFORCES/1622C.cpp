@@ -1,9 +1,10 @@
 /**
  * Author: KUNWAR
  * Date:   2026-05-11
- * Time:   12:09:35
+ * Time:   03:23:44
 **/
 
+#include <algorithm>
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -55,38 +56,39 @@ template<typename T> void out2D(const vector<vector<T>>& vec) { for (size_t i = 
 
 void solve() {
     l(n);
-    l(aq);
-    l(bq);
+    l(k);
 
-    vll a(n+1);
-    f(i , 1 , n+1) {
-        cin >> a[i];
+    auto a = in<ll>(n);
+
+    sort(all(a));
+    vll pref(n) ; 
+
+    f(i , 0 , n) {
+        pref[i] = a[i] ;
+        if(i > 0) pref[i] += pref[i-1];
     }
 
-    vll pref(n+1);
-    pref[0] = 0 ; 
-    f(i , 1 , n+1) {
-        pref[i] = (a[i] + pref[i-1]) ;
+    ll s = pref[n-1];
+    if(pref[n-1] <= k) {
+        op(0);
+        return;
     }
 
-    multiset<ll> k ; 
-
-    ll ans = -2e18;
-
-    f(i , aq , n+1) {
-        k.insert(pref[i - aq]);
-        if(i > bq) {
-            k.erase(k.find(pref[i-bq-1]));
+    ll ans = 2e18 ;
+    f(x , 0 , n) {
+        ll p = (pref[n-x-1] + x * a[0] - k)  ; 
+        ll y = 0 ;
+        if(p >= 0) {
+            y = (p + x) / (x + 1) ;    
         }
-        ans = max(ans, pref[i] - *k.begin());
+        ans = min(ans , x+y);
     }
-    cout << ans << endl;
+    op(ans);
 }
 
 int main() {
     fastio();
-    // l(t);
-    ll t = 1; 
+    l(t);
     while(t--) {
         solve();
     }

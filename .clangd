@@ -1,0 +1,13 @@
+CompileFlags:
+  Compiler: /opt/homebrew/bin/g++-15
+  Add:
+    - -std=gnu++20
+    - -I/opt/homebrew/opt/gcc/include/c++/15
+    - -I/opt/homebrew/opt/gcc/include/c++/15/aarch64-apple-darwin25
+    - -I/opt/homebrew/opt/gcc/include/c++/15/backward
+    - -I/opt/homebrew/opt/gcc/lib/gcc/current/gcc/aarch64-apple-darwin25/15/include
+    - -I/opt/homebrew/opt/gcc/lib/gcc/current/gcc/aarch64-apple-darwin25/15/include-fixed
+    - -I/Library/Developer/CommandLineTools/SDKs/MacOSX26.sdk/usr/include
+Diagnostics:
+  Suppress:
+    - type_unsupported
