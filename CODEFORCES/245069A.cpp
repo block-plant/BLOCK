@@ -1,7 +1,7 @@
 /**
  * Author: KUNWAR
- * Date:   2026-05-19
- * Time:   23:14:44
+ * Date:   2026-05-20
+ * Time:   04:05:26
 **/
 
 #include <bits/stdc++.h>
@@ -58,60 +58,56 @@ void solve() {
     l(d);
     auto a = in<ll>(n);
 
-    ll l = 1 ; 
-    ll r = d ;
+    ll l = 1 , r = d ; 
+    ll tl = 1 , tr = d ; 
 
-    ll currl = 1 ;
-    ll currd = d ;
-
-    auto check = [&](double k)->bool {
-        vector<double> pref(n+1,0.0);
-
+    auto helper = [&](double x)->bool {
+        vector<double> pref(n , 0.0);
         f(i , 0 , n) {
-            pref[i+1] = pref[i] + (a[i] - k) ; 
+            pref[i] = a[i] - x;
+            if(i > 0) pref[i] += pref[i-1];
         }
 
-        double mn = 0.0 ;
-        ll cur = 0 ; 
+        double cur = 0.0 ;
+        ll idx = -1 ; 
 
-        f(i , d , n+1) {
-            if(pref[i - d] < mn) {
-                mn = pref[i - d];
-                cur = i - d;
+        f(i , d-1 , n) {
+            if((i >= d) && pref[i - d] < cur) {
+                idx = i - d ;
+                cur = pref[i - d] ;
             }
-            if(pref[i] - mn >= 0) {
-                currl = cur + 1 ;
-                currd = i ; 
+            if(pref[i] - cur >= 0) {
+                tl = idx + 2 ;
+                tr = i + 1 ;
                 return true;
             }
         }
-        
-        return false;
+        return false ;
     };
 
-    double low = 0.0 ;
-    double high = 100.0 ; 
+    double low = 0 ; 
+    double high = 1e9 + 7 ;
 
-    double ans = 0.0 ;
     f(i , 0 , 100) {
         double mid = (high + low) / 2.0 ; 
-
-        if(check(mid)) {
-            low = mid ; 
-            l = currl ; 
-            r = currd ;
+        
+        if(helper(mid)) {
+            l = tl ;
+            r = tr ; 
+            low = mid ;
         }
         else {
-            high = mid ;
+            high = mid ; 
         }
     }
+
     cout << l << ' ' << r << endl;
 }
 
 int main() {
     fastio();
     // l(t);
-    ll t = 1;
+    ll t = 1 ;
     while(t--) {
         solve();
     }
