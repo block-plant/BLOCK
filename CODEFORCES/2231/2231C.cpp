@@ -1,0 +1,101 @@
+/**
+ * Author: KUNWAR
+ * Date:   2026-05-21
+ * Time:   21:14:14
+**/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// --- Type Definitions ---
+using ll = long long;
+using vi = vector<int>;
+using vll = vector<ll>;
+using vs = vector<string>;
+using vc = vector<char>;
+using vb = vector<bool>;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+using vpii = vector<pii>;
+using vpll = vector<pll>;
+using vvi = vector<vi>;
+using vvll = vector<vll>;
+using ld = long double;
+
+// --- Macros ---
+#define f(i,a,b) for(ll i=a;i<b;i++)
+#define fr(i,a,b) for(ll i=a;i>=b;i--)
+#define fkv(k, v, m) for(auto &[k, v] : m)
+#define all(x) (x).begin(), (x).end()
+#define get_sum(v, total) for(auto &x : v) total += x
+#define cn continue
+#define op(x) cout << x << endl
+
+// --- Input Macros ---
+#define read(...) __VA_ARGS__; read_input(__VA_ARGS__)
+void read_input() {}
+template<typename T, typename... Args>
+void read_input(T& first, Args&... rest) { cin >> first; read_input(rest...); }
+#define var(type, ...) type __VA_ARGS__; read_input(__VA_ARGS__)
+#define i(x) int x; cin >> x
+#define l(x) long long x; cin >> x
+#define s(x) string x; cin >> x
+#define c(x) char x; cin >> x
+
+void fastio() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+}
+
+template <typename T> vector<T> in(int n) { vector<T> v(n); for (T &x : v) cin >> x; return v; }
+template <typename T> void out(const vector<T> &v) { for (const T &x : v) cout << x << ' '; cout << '\n'; }
+template<typename T> vector<vector<T>> create2D(size_t rows, size_t cols, T default_value = T{}) { return vector<vector<T>>(rows, vector<T>(cols, default_value)); }
+template <typename T> vector<vector<T>> in2D(int r, int c) { auto v = create2D<T>(r, c); for (auto &row : v) for (T &cell : row) cin >> cell; return v; }
+template<typename T> void out2D(const vector<vector<T>>& vec) { for (size_t i = 0; i < vec.size(); ++i) { for (size_t j = 0; j < vec[i].size(); ++j) { cout << vec[i][j] << (j < vec[i].size() - 1 ? " " : ""); } cout << "\n"; } }
+
+void solve() {
+    l(n);
+    auto a = in<ll>(n);
+    map<ll , ll> cnt ,sum ;
+
+    f(i , 0 , n) {
+        ll cur = a[i];
+        ll oprs = 0 ; 
+        while(cur > 1) {
+            if(i == 0 || cnt.count(cur)) {
+                cnt[cur]++;
+                sum[cur] += oprs;
+            }
+            if(cur % 2 == 0) cur /= 2;
+            else cur++;
+            oprs++;
+        }
+        if(i == 0 || cnt.count(1)) {
+            cnt[1]++; 
+            sum[1] += oprs;
+        }
+        if(a[i] == 1) {
+            cnt[2]++;
+            sum[2] += 1;
+        }
+    }
+    ll ans = -1;
+    fkv(val, i, cnt) {
+        if(i == n) { 
+            if(ans == -1 || sum[val] < ans) {
+                ans = sum[val];
+            }
+        }
+    }
+
+    cout << ans << endl;
+}
+
+int main() {
+    fastio();
+    l(t);
+    while(t--) {
+        solve();
+    }
+    return 0;
+}
