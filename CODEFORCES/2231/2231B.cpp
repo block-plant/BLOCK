@@ -67,9 +67,8 @@ void solve() {
     f(i , 0 , n) {
         if(a[i] < ans) {
             a[i] += mx;        
-        } else {
-            ans = a[i];   
-        }
+        } 
+        ans = max(ans, a[i]);
     }
 
     f(i , 1 , n) {
