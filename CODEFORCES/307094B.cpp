@@ -1,7 +1,9 @@
+// https://codeforces.com/edu/course/2/lesson/9/3/practice/contest/307094/problem/B
+
 /**
  * Author: KUNWAR
- * Date:   2026-05-21
- * Time:   18:06:14
+ * Date:   2026-05-23
+ * Time:   08:32:22
 **/
 
 #include <bits/stdc++.h>
@@ -47,48 +49,34 @@ void fastio() {
     cin.tie(NULL);
 }
 
+template <typename T> vector<T> in(int n) { vector<T> v(n); for (T &x : v) cin >> x; return v; }
+template <typename T> void out(const vector<T> &v) { for (const T &x : v) cout << x << ' '; cout << '\n'; }
+template<typename T> vector<vector<T>> create2D(size_t rows, size_t cols, T default_value = T{}) { return vector<vector<T>>(rows, vector<T>(cols, default_value)); }
+template <typename T> vector<vector<T>> in2D(int r, int c) { auto v = create2D<T>(r, c); for (auto &row : v) for (T &cell : row) cin >> cell; return v; }
+template<typename T> void out2D(const vector<vector<T>>& vec) { for (size_t i = 0; i < vec.size(); ++i) { for (size_t j = 0; j < vec[i].size(); ++j) { cout << vec[i][j] << (j < vec[i].size() - 1 ? " " : ""); } cout << "\n"; } }
+
 void solve() {
-    l(x);
-    l(q);
-    multiset<ll> a ;
-    multiset<ll> b ;
-    a.insert(x);
-    auto bal = [&]()->void {
-        if(a.size() > b.size()+1) {
-            b.insert(*a.rbegin());
-            a.erase(prev(a.end()));
+    l(n);
+    l(s);
+    auto a = in<ll>(n);
+    ll ans = 0;
+    ll sum = 0;
+    for(int left = 0 , right = 0 ; right < n ; right++) {
+        sum += a[right];
+        while(left <= right && sum > s) {
+            sum -= a[left];
+            left++ ; 
         }
-        if(a.size() < b.size()) {
-            a.insert(*b.begin());
-            b.erase(b.begin());
-        }
-    };
-    bal();
-    while(q--) {
-        ll one , two ;
-        cin >> one >> two ;
-        if(a.empty() || one <= *a.rbegin()) {
-            a.insert(one);
-        }
-        else {
-            b.insert(one);
-        }
-        bal();
-        if(a.empty() || two <= *a.rbegin()) {
-            a.insert(two);
-        }
-        else {
-            b.insert(two);
-        }
-        bal();
-        cout << *a.rbegin() << endl;
+        ll p = (right - left + 1);
+        ans += (p * (p + 1)) / 2 ;  
     }
+    cout << ans << endl;
 }
 
 int main() {
     fastio();
     // l(t);
-    ll t = 1; 
+    ll t = 1 ;
     while(t--) {
         solve();
     }
