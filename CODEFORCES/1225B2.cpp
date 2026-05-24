@@ -1,13 +1,11 @@
 /**
  * Author: KUNWAR
- * Date:   2026-03-11
- * Time:   06:58:49
+ * Date:   2026-05-24
+ * Time:   18:48:03
 **/
 
 #include <bits/stdc++.h>
-#include <iostream>  
-#include <vector>   
-#include <string>
+#include <climits>
 using namespace std;
 
 // --- Type Definitions ---
@@ -41,7 +39,7 @@ template<typename T, typename... Args>
 void read_input(T& first, Args&... rest) { cin >> first; read_input(rest...); }
 #define var(type, ...) type __VA_ARGS__; read_input(__VA_ARGS__)
 #define i(x) int x; cin >> x
-#define l(x) ll x; cin >> x
+#define l(x) long long x; cin >> x
 #define s(x) string x; cin >> x
 #define c(x) char x; cin >> x
 
@@ -57,72 +55,34 @@ template <typename T> vector<vector<T>> in2D(int r, int c) { auto v = create2D<T
 template<typename T> void out2D(const vector<vector<T>>& vec) { for (size_t i = 0; i < vec.size(); ++i) { for (size_t j = 0; j < vec[i].size(); ++j) { cout << vec[i][j] << (j < vec[i].size() - 1 ? " " : ""); } cout << "\n"; } }
 
 void solve() {
-    auto ask = [&](ll low, ll high)->ll {
-        cout << "? " << low << ' ' << high << endl;
-        ll response;
-        cin >> response;
-        return response;
-    };
-    vll fact = {4,8,15,16,23,42};
-    vll ans(6);
-    vll used(50 , 0);
-    vll consider(50);
-    f(i , 0 , 6)
-    {
-        used[fact[i]]++ ;
+    l(n);
+    l(k);
+    l(d);
+    auto a = in<ll>(n);
+    map<ll , ll> mp ;
+    ll ans = LLONG_MAX ; 
+
+    for(int i = 0 ; i < n ; i++) {
+        mp[a[i]]++ ;
+        if(i >= d) {
+            ll val = a[i - d];
+            mp[val]-- ;
+            if(mp[val] == 0) {
+                mp.erase(val);
+            }
+        }
+        if(i >= d-1) {
+            ans = min(ans , (ll)mp.size());
+        }
     }
-    ll x = ask(1,2);
-    ll y = ask(2,3);
-    ll z = ask(4,5);
-    ll a = ask(5,6);
-
-    f(i , 0 , 6)
-    {
-        if(x % fact[i] != 0) cn;
-        ll g = x / fact[i] ;
-        if(g < 50 && used[g] && fact[i] != g) consider[g]++ ;
-    }
-
-    f(i , 0 , 6)
-    {
-        if(y % fact[i] != 0) cn;
-        ll g = y / fact[i] ;
-        if(g < 50 && used[g] && fact[i] != g) consider[g]++ ;
-    }
-
-    f(i , 0 , 50) if(consider[i] == 2) ans[1] = i ; 
-    
-    ans[0] = x / ans[1] ;
-    ans[2] = y / ans[1] ; 
-
-    f(i , 0 , 50)
-    {
-        consider[i] = 0 ; 
-    } 
-
-    f(i , 0 , 6)
-    {
-        if(z % fact[i] != 0) cn;
-        ll g = z / fact[i] ;
-        if(g < 50 && used[g] && fact[i] != g) consider[g]++ ;
-    }
-
-    f(i , 0 , 6)
-    {
-        if(a % fact[i] != 0) cn;
-        ll g = a / fact[i] ;
-        if(g < 50 && used[g] && fact[i] != g) consider[g]++ ;
-    }
-
-    f(i , 0 , 50) if(consider[i] == 2) ans[4] = i ; 
-    ans[3] = z / ans[4] ;
-    ans[5] = a / ans[4] ; 
-    cout << "! ";
-    f(i , 0 , 6) cout << ans[i] << ' ' ;
-    cout << endl;
+    cout << ans << endl;
 }
 
 int main() {
-    solve();
+    fastio();
+    l(t);
+    while(t--) {
+        solve();
+    }
     return 0;
 }
