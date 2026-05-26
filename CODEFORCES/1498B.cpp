@@ -57,29 +57,38 @@ template<typename T> void out2D(const vector<vector<T>>& vec) { for (size_t i = 
 void solve() {
     l(n);
     l(w);
-    multiset<ll> a ;
-    f(i , 0 , n) {
-        ll x ;
-        cin >> x ;
-        a.insert(x);
-    }
+    auto a = in<ll>(n);
+    sort(all(a));
+    reverse(all(a));
 
-    ll h = 1 ;
-    ll high = w ; 
+    auto check = [&](ll mid)->bool {
+        multiset<ll> t;
+        f(j, 0, mid) {
+            t.insert(w);
+        }
+        f(i , 0 , n) {
+            auto it = prev(t.end()); 
+            if(*it < a[i]) return false; 
+            ll rem = *it - a[i];
+            t.erase(it);
+            t.insert(rem);
+        }
+        return true;
+    };
 
-    while(!a.empty()) {
-        auto it = a.upper_bound(high);
-        if(it != a.begin()) {
-            it-- ; 
-            high -= *it ;
-            a.erase(it); 
+    ll low = 1 ;
+    ll high = n ;
+
+    while(low <= high) {
+        ll mid = (low + high) / 2 ;
+        if(check(mid)) {
+            high = mid - 1; 
         }
         else {
-            h++ ; 
-            high = w ;
+            low = mid + 1;
         }
     }
-    cout << h << endl;
+    cout << low << endl;
 }
 
 int main() {
