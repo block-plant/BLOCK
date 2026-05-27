@@ -5,6 +5,7 @@
 **/
 
 #include <bits/stdc++.h>
+#include <climits>
 using namespace std;
 
 // --- Type Definitions ---
@@ -47,19 +48,54 @@ void fastio() {
     cin.tie(NULL);
 }
 
-template <typename T> vector<T> in(int n) { vector<T> v(n); for (T &x : v) cin >> x; return v; }
-template <typename T> void out(const vector<T> &v) { for (const T &x : v) cout << x << ' '; cout << '\n'; }
-template<typename T> vector<vector<T>> create2D(size_t rows, size_t cols, T default_value = T{}) { return vector<vector<T>>(rows, vector<T>(cols, default_value)); }
-template <typename T> vector<vector<T>> in2D(int r, int c) { auto v = create2D<T>(r, c); for (auto &row : v) for (T &cell : row) cin >> cell; return v; }
-template<typename T> void out2D(const vector<vector<T>>& vec) { for (size_t i = 0; i < vec.size(); ++i) { for (size_t j = 0; j < vec[i].size(); ++j) { cout << vec[i][j] << (j < vec[i].size() - 1 ? " " : ""); } cout << "\n"; } }
-
 void solve() {
-    
+    string s ;
+    cin >> s ;
+    ll m = s.length();
+    l(n);
+    vector<string> a(n);
+    ll mn = LLONG_MAX;
+    for(int i = 0 ; i < n ; i++) {
+        cin >> a[i];
+        mn = min(mn , (ll)a[i].length());
+    }
+    ll left = 0 ; 
+    ll ans = 0 ;
+    ll b = 0 ; 
+    f(right , 0 , m) {
+        if(right - left + 1 >= mn) {
+            f(i , 0 , n) {
+                ll len = a[i].length();
+                if(right - left + 1 >= len) {
+                    bool p = true;
+                    ll idx = right - len + 1;
+                    
+                    f(j , 0 , len) {
+                        if(s[idx + j] != a[i][j]) {
+                            p = false;
+                            break;
+                        }
+                    }
+                    
+                    if(p) {
+                        left = max(left, idx + 1);
+                    }
+                }
+            }
+        }
+        ll k = right - left + 1;
+        if(k >= ans) {
+            ans = k ; 
+            b = left ;
+        }
+    }
+    cout << ans << ' ' << b << endl;
 }
 
 int main() {
     fastio();
-    l(t);
+    // l(t);
+    ll t = 1;
     while(t--) {
         solve();
     }
