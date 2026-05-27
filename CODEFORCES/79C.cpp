@@ -1,7 +1,7 @@
 /**
  * Author: KUNWAR
  * Date:   2026-05-27
- * Time:   16:20:14
+ * Time:   18:53:26
 **/
 
 #include <bits/stdc++.h>
@@ -47,35 +47,19 @@ void fastio() {
     cin.tie(NULL);
 }
 
+template <typename T> vector<T> in(int n) { vector<T> v(n); for (T &x : v) cin >> x; return v; }
+template <typename T> void out(const vector<T> &v) { for (const T &x : v) cout << x << ' '; cout << '\n'; }
+template<typename T> vector<vector<T>> create2D(size_t rows, size_t cols, T default_value = T{}) { return vector<vector<T>>(rows, vector<T>(cols, default_value)); }
+template <typename T> vector<vector<T>> in2D(int r, int c) { auto v = create2D<T>(r, c); for (auto &row : v) for (T &cell : row) cin >> cell; return v; }
+template<typename T> void out2D(const vector<vector<T>>& vec) { for (size_t i = 0; i < vec.size(); ++i) { for (size_t j = 0; j < vec[i].size(); ++j) { cout << vec[i][j] << (j < vec[i].size() - 1 ? " " : ""); } cout << "\n"; } }
+
 void solve() {
-    string a ; 
-    string b ; 
-    cin >> a >> b ;
-    ll n = a.length() ;
-    ll m = b.length() ; 
-    ll left = 0 ;
-    ll one = 0 ; 
-    ll zero = 0 ;
-    f(i , 0 , m) zero += (b[i] == '1'); 
-    ll ans = 0 ;
-    f(right , 0 , n) {
-        one = one + (a[right] == '1') ;
-        if(right - left + 1 > m) {
-            one = one - (a[left] == '1');
-            left++ ; 
-        }
-        if(right - left + 1 == m) {
-            ll dif = one + zero ;
-            if(dif % 2 == 0) ans++ ; 
-        }
-    }
-    cout << ans << endl;
+    
 }
 
 int main() {
     fastio();
-    // l(t);
-    ll t = 1;
+    l(t);
     while(t--) {
         solve();
     }
