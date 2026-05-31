@@ -1,16 +1,10 @@
 /**
  * Author: KUNWAR
- * Date:   2026-03-17
- * Time:   22:33:24
+ * Date:   2026-05-30
+ * Time:   00:17:02
 **/
 
 #include <bits/stdc++.h>
-#include <iostream>  
-#include <vector>   
-#include <string>
-#include <algorithm>
-#include <map>
-#include <set>
 using namespace std;
 
 // --- Type Definitions ---
@@ -53,58 +47,13 @@ void fastio() {
     cin.tie(NULL);
 }
 
-ll a = 4 ;
-ll b = 6 ; 
-ll c = 6 ; 
-ll d = 2 ; 
-bool testing = false;
-
 void solve() {
     l(n);
     l(m);
+    l(l);
+    l(r);
 
-    auto ask = [&](ll x , ll y)->ll {
-        auto interactor = [&](ll x , ll y)->ll {
-            return min(abs(x-a) + abs(y-b) , abs(x-c) + abs(y-d));
-        };
-
-        cout << "? " << x << ' ' << y << endl;
-        if(testing) {
-            ll simulated_response = interactor(x , y);
-            cout << simulated_response << endl;
-            return simulated_response;
-        }
-
-        ll response;
-        cin >> response;
-        return response;
-    };
-
-    ll d1 = ask(1, 1);
-    ll d2 = ask(n, 1);
-    ll d3 = ask(1, m);
-
-    bool found_A = false;
-    if((d1 + d2 - n + 3) % 2 == 0) 
-    { 
-        ll y_f = (d1 + d2 - n + 3) / 2;
-        ll x_f = d1 + 2 - y_f;
-
-        if(x_f >= 1 && x_f <= n && y_f >= 1 && y_f <= m) 
-        {
-            ll verify = ask(x_f, y_f);
-            if(verify == 0) 
-            {
-                cout << "! " << x_f << " " << y_f << endl;
-                return; 
-            }
-        }
-    }
-
-    ll x_s = (d1 + d3 - m + 3) / 2;
-    ll y_s = d1 + 2 - x_s;
-    
-    cout << "! " << x_s << " " << y_s << endl;
+    cout << min(max(m,l) - min(m,l) , l) << ' ' << min(m,r) << endl;
 }
 
 int main() {
