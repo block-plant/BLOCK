@@ -1,9 +1,7 @@
-// https://codeforces.com/edu/course/2/lesson/9/3/practice/contest/307094/problem/A
-
 /**
  * Author: KUNWAR
- * Date:   2026-05-13
- * Time:   21:11:14
+ * Date:   2026-06-04
+ * Time:   03:20:40
 **/
 
 #include <bits/stdc++.h>
@@ -55,52 +53,35 @@ template<typename T> vector<vector<T>> create2D(size_t rows, size_t cols, T defa
 template <typename T> vector<vector<T>> in2D(int r, int c) { auto v = create2D<T>(r, c); for (auto &row : v) for (T &cell : row) cin >> cell; return v; }
 template<typename T> void out2D(const vector<vector<T>>& vec) { for (size_t i = 0; i < vec.size(); ++i) { for (size_t j = 0; j < vec[i].size(); ++j) { cout << vec[i][j] << (j < vec[i].size() - 1 ? " " : ""); } cout << "\n"; } }
 
+bool isPrime(ll n) { if(n <= 1) return false; if(n <= 3) return true; if(n % 2 == 0 || n % 3 == 0) return false; for(ll i = 5; i * i <= n; i += 6) if(n % i == 0 || n % (i + 2) == 0) return false; return true; }
+ll getFact(ll n) { ll factors = 0; for(ll i = 1; i * i <= n; i++) { if(n % i == 0) { factors++; if(i * i != n) factors++; } } return factors; }
+
 void solve() {
     l(n);
-    l(p);
     auto a = in<ll>(n);
-
-    ll sum = 0 ;
-    f(i , 0 , n) sum += a[i];
-    ll fl = p / sum;
-    ll rem = p % sum;
-    ll bw = fl * n; 
-
-    if(rem == 0) {
-        cout << 1 << ' ' << bw << endl;
-        return;
-    }
-    ll start = 0;
-    ll end = 0;
-    ll cur = 0;
-    
-    ll win = n+1;
-    ll bs = 0;
-
-    ll steps = 0;
-
-    while(steps < 3 * n) { 
-        cur += a[end % n];
-        while(cur - a[start % n] >= rem && start <= end) {
-            cur -= a[start % n];
-            start++;
+    sort(all(a));
+    ll i = 0 ; 
+    ll j = n - 1 ;
+    while(i <= j) {
+        if(a[i] * a[j] != a[0] * a[n-1]) {
+            cout << -1 << endl;
+            return;
         }
-        if(cur >= rem) {
-            if(end - start + 1 < win) {
-                win = end - start + 1;
-                bs = start % n;
-            }
-        }   
-        end++;
-        steps++;
+        i++ ;
+        j-- ;
     }
-    cout << bs + 1 << ' ' << bw + win << endl;
+    
+    if(getFact(a[0] * a[n-1]) == n + 2) {
+        cout << a[0] * a[n-1] << endl;
+    }
+    else {
+        cout << -1 << endl;
+    }
 }
 
 int main() {
     fastio();
-    // l(t);
-    ll t = 1 ;
+    l(t);
     while(t--) {
         solve();
     }
