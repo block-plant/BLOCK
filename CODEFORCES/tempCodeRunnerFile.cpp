@@ -1,0 +1,1 @@
+if(st.empty()) flag = 0 ;
