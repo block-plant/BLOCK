@@ -1,7 +1,7 @@
 /**
  * Author: KUNWAR
- * Date:   2026-07-15
- * Time:   23:27:06
+ * Date:   2026-07-16
+ * Time:   20:25:20
 **/
 
 #include <bits/stdc++.h>
@@ -55,64 +55,22 @@ template<typename T> void out2D(const vector<vector<T>>& vec) { for (size_t i = 
 
 void solve() {
     l(n);
-    vll p(n+1);
-    ll inv = 0;
-    f(i , 1 , n+1) {
-        cin >> p[i];
-        f(j , 1 , i) {
-            if(p[j] > p[i]) inv++;
+    l(c);
+    auto a= in<ll>(n);
+    ll mx = 0 ;
+    f(i , 0 , n) {
+        mx += (a[i] - c);
+    }
+    sort(all(a));
+    f(i , 0 , n / 2) {
+        if(a[i] < c) {
+            mx += (c - a[i]);
+        } 
+        else {
+            break;
         }
     }
-    if(n % 2 == 0 && inv % 2 != 0){
-        cout << -1 << endl;
-        return;
-    }
-    if(n == 2) {
-        cout << 0 << endl;
-        return;
-    }
-    
-    vll a(p.begin()+ 1 , p.end()); 
-    vll ops;
-    auto apply = [&](ll i) { 
-        vll b;
-        b.reserve(n);
-        b.push_back(a[i]);
-        f(k , 0 , i) b.push_back(a[k]);
-        f(k , i+2 , n) b.push_back(a[k]);
-        b.push_back(a[i+1]);
-        a.swap(b);
-        ops.push_back(i+1); 
-    };
-    auto mv = [&](ll val) {
-        ll pos = -1;
-        f(k, 0, n) if(a[k] == val) pos = k;
-        
-        if (pos == n - 1) return;
-        
-        if (pos == 0) {
-            apply(n - 2);
-            pos = 1;
-        }
-        apply(pos - 1);
-    };
-    ll lft = (n + 1) / 2;
-    ll rt = (n % 2 == 0) ? lft + 1 : lft;
-    if(n % 2 != 0) {
-        lft--;
-        rt++;
-    }
-    while(lft >= 1 && rt <= n) {
-        mv(lft);
-        mv(rt); 
-        apply(n - 2);
-        
-        lft--;
-        rt++;
-    }
-    cout << ops.size() << endl;
-    if(!ops.empty()) out(ops);
-    else cout << endl;
+    cout << mx << endl;    
 }
 
 int main() {
