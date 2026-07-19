@@ -50,32 +50,29 @@ void fastio() {
 void solve() {
     l(n); 
     l(k);
-    ll mx = 2LL * n - 2;
-    vll g(n);
-    f(i , 1 , n) {
-        g[i] = min((ll)i, (ll)n - (ll)i) - 1;
-        mx += 2LL * g[i];
-    }
+    ll ec = n / 2;
+    ll oc = (n - 1) / 2;
+    ll mg = (ec * (ec - 1)) / 2 + (oc * (oc - 1)) / 2;
+    ll mx = 2LL * n - 2 + 2LL * mg;
     if(k % 2 != 0 || k < 2LL * n - 2 || k > mx) {
         op(-1);
         return;
     }
-    vll p;
-    p.push_back(1);
-    for(int i = 2 ; i <= n ; i += 2) p.push_back(i);
-    for(int i = (n % 2 == 1 ? n : n - 1) ; i >= 3 ; i -= 2) p.push_back(i);
     ll r = (k - (2LL * n - 2)) / 2;
-    f(i , 1 , n) {
-        if(r == 0) {
-            cout << 1 << " " << p[i] << endl;
-        } 
-        else if(r >= g[i]) {
-            cout << p[i-1] << " " << p[i] << endl;
-            r -= g[i];
-        } 
-        else {
-            cout << p[i - 1 - (g[i] - r)] << " " << p[i] << endl;
-            r = 0;
+    vi e = {1}, o = {1};
+    f(i , 2 , n + 1) {
+        if(i % 2 == 0) {
+            ll g = min(r, (ll)e.size() - 1);
+            cout << e[g] << " " << i << endl;
+            r -= g;
+            e.resize(g + 1); 
+            e.push_back(i);
+        } else {
+            ll g = min(r, (ll)o.size() - 1);
+            cout << o[g] << " " << i << endl;
+            r -= g;
+            o.resize(g + 1);
+            o.push_back(i);
         }
     }
 }
